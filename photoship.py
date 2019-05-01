@@ -40,7 +40,6 @@ class CLS_pic(object):
                 scr.blit(img,(x,y))
                 pygame.display.update()
         elif effNum == 7:
-            print('7')
             w,h= spd*8,int(SCREEN_H/SCREEN_W*spd*8)
             xNum,yNum = SCREEN_W//w,SCREEN_H//h
             mList = []
