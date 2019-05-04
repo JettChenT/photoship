@@ -89,6 +89,19 @@ class CLS_button(object):
             pship.guideList[self.guideID].pic.draw(pship.scr,11,pship.spd)
 
         pship.guideID = self.guideID
+def add_btn(btn1,direction,btn2):
+    if direction == 'U':
+        btn1.add_button('U','bUp.bmp',SCREEN_W//2-35,20,btn2.id)
+        btn2.add_button('D','bDown.bmp',SCREEN_W//2-35,SCREEN_H-100,btn1.id)
+    elif direction == 'D':
+        btn1.add_button('D','bDown.bmp',SCREEN_W//2-35,SCREEN_H-100,btn2.id)
+        btn2.add_button('U','bUp.bmp',SCREEN_W//2-35,20,btn1.id)
+    elif direction == 'L':
+        btn1.add_button('L','bLeft.bmp',20,SCREEN_H//2-35,btn2.id)
+        btn2.add_button('R','bRight.bmp',SCREEN_W-100,SCREEN_H//2-35,btn1.id)
+    elif direction == 'R':
+        btn2.add_button('L','bLeft.bmp',20,SCREEN_H//2-35,btn1.id)
+        btn1.add_button('R','bRight.bmp',SCREEN_W-100,SCREEN_H//2-35,btn2.id)
 #----init-----
 pship = CLS_photoship()
 G01 = CLS_guide('xian01.jpg')
@@ -99,13 +112,9 @@ G03 = CLS_guide('xian03.jpg')
 pship.add_guide(G03)
 G04 = CLS_guide('xian04.jpg')
 pship.add_guide(G04)
-G01.add_button('U','bUp.bmp',SCREEN_W//2-35,20,G02.id)
-G01.add_button('L','bLeft.bmp',20,SCREEN_H//2-35,G03.id)
-G01.add_button('R','bRight.bmp',SCREEN_W-100,SCREEN_H//2-35,G04.id)
-G02.add_button('D','bDown.bmp',SCREEN_W//2-35,SCREEN_H-100,G01.id)
-G03.add_button('R','bRight.bmp',SCREEN_W-100,SCREEN_H//2-35,G01.id)
-G04.add_button('L','bLeft.bmp',20,SCREEN_H//2-35,G01.id)
-
+add_btn(G01,'U',G02)
+add_btn(G01,'L',G03)
+add_btn(G01,'R',G04)
 # -------------main---
 while True:
     for event in pygame.event.get():
