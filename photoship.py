@@ -16,11 +16,6 @@ class CLS_photoship(object):
         guide.id = len(self.guideList)
         self.guideList.append(guide)
 
-    def load_pic(self):
-        flist = ['xian01.jpg','xian02.jpg','xian03.jpg','xian04.jpg','trump.jpg']
-        for fileName in flist:
-            self.picList.append(CLS_pic(fileName))
-
     def play(self):
         for guide in self.guideList:
             guide.draw(self.scr)
@@ -116,6 +111,18 @@ def xian():
     add_btn(G01,'U',G02)
     add_btn(G01,'L',G03)
     add_btn(G01,'R',G04)
+def house():
+    bookroom = CLS_guide('bookroom.jpg')
+    pship.add_guide(bookroom)
+    balcony = CLS_guide('balcony.jpg')
+    pship.add_guide(balcony)
+    chair = CLS_guide('chair.jpg')
+    pship.add_guide(chair)
+    laundry = CLS_guide('laundry.jpg')
+    pship.add_guide(laundry)
+    add_btn(bookroom,'U',balcony)
+    add_btn(balcony,'L',chair)
+    add_btn(chair,'L',laundry)
 xian()
 # -------------main---
 while True:
