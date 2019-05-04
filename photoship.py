@@ -26,7 +26,7 @@ class CLS_photoship(object):
             guide.draw(self.scr)
         pygame.display.update()
         self.clock.tick()
-    
+
     def keydown(self,key):
         pass
     def mouse_down(self,pos,btn):
@@ -53,13 +53,60 @@ class CLS_guide(object):
     def mouse_down(self,pos,button):
         for btn in self.btnList:
             btn.mouse_down(pos,button)
-    
+
     def mouse_up(self,pos,button):
         for btn in self.btnList:
             btn.mouse_up(pos,button)
-    
-# -------------main---
+    def mouse_motion(self,pos):
+        pass
+
+class CLS_button(object):
+    def __init__(self,name,picFile,x,y,guideID):
+        self.name = name
+        self.img = pygame.image.load(picFile)
+        self.img.set_colorkey((38,38,38))
+        self.w,self.h = self.img.get_width()//2,self.img.get_height()
+        self.x, self.y = x,y
+        self.rect = pygame.Rect(self.x,self.y,self.w,self.h)
+        self.status = 0
+        self.guideID = guideID
+    def draw(self,scr):
+        scr.blit(self.img,(self.x,self.y),(self.status*self.rect.w,0,self.rect.w,self.rect.h))
+    def mouse_down(self,pos,button):
+        if self.rect.collidepoint(pos):
+            self.status = 1
+    def mouse_up(self,pos,button):
+        self.status = 0
+        if not self.rect.collidepoint(pos):
+            return
+        if self.name == 'U':
+            pship.guideList[self.guideID].pic.draw(pship.scr,12,pship.spd)
+        elif self.name == 'D':
+            pship.guideList[self.guideID].pic.draw(pship.scr,13,pship.spd)
+        elif self.name == 'L':
+            pship.guideList[self.guideID].pic.draw(pship.scr,10,pship.spd)
+        elif self.name == 'R':
+            pship.guideList[self.guideID].pic.draw(pship.scr,11,pship.spd)
+
+        pship.guideID = self.guideID
+#----init-----
 pship = CLS_photoship()
+G01 = CLS_guide('xian01.jpg')
+pship.add_guide(G01)
+G02 = CLS_guide('xian02.jpg')
+pship.add_guide(G02)
+G03 = CLS_guide('xian03.jpg')
+pship.add_guide(G03)
+G04 = CLS_guide('xian04.jpg')
+pship.add_guide(G04)
+G01.add_button('U','bUp.bmp',SCREEN_W//2-35,20,G02.id)
+G01.add_button('L','bLeft.bmp',20,SCREEN_H//2-35,G03.id)
+G01.add_button('R','bRight.bmp',SCREEN_W-100,SCREEN_H//2-35,G04.id)
+G02.add_button('D','bDown.bmp',SCREEN_W//2-35,SCREEN_H-100,G01.id)
+G03.add_button('R','bRight.bmp',SCREEN_W-100,SCREEN_H//2-35,G01.id)
+G04.add_button('L','bLeft.bmp',20,SCREEN_H//2-35,G01.id)
+
+# -------------main---
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -67,4 +114,10 @@ while True:
             sys.exit()
         if event.type == pygame.KEYDOWN:
             pship.keydown(event.key)
+        elif event.type ==pygame.MOUSEBUTTONDOWN:
+            pship.mouse_down(event.pos,event.button)
+        elif event.type == pygame.MOUSEBUTTONUP:
+            pship.mouse_up(event.pos,event.button)
+        elif event.type == pygame.MOUSEMOTION:
+            pship.mouse_motion(event.pos)
     pship.play()
