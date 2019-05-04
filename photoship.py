@@ -104,17 +104,19 @@ def add_btn(btn1,direction,btn2):
         btn1.add_button('R','bRight.bmp',SCREEN_W-100,SCREEN_H//2-35,btn2.id)
 #----init-----
 pship = CLS_photoship()
-G01 = CLS_guide('xian01.jpg')
-pship.add_guide(G01)
-G02 = CLS_guide('xian02.jpg')
-pship.add_guide(G02)
-G03 = CLS_guide('xian03.jpg')
-pship.add_guide(G03)
-G04 = CLS_guide('xian04.jpg')
-pship.add_guide(G04)
-add_btn(G01,'U',G02)
-add_btn(G01,'L',G03)
-add_btn(G01,'R',G04)
+def xian():
+    G01 = CLS_guide('xian01.jpg')
+    pship.add_guide(G01)
+    G02 = CLS_guide('xian02.jpg')
+    pship.add_guide(G02)
+    G03 = CLS_guide('xian03.jpg')
+    pship.add_guide(G03)
+    G04 = CLS_guide('xian04.jpg')
+    pship.add_guide(G04)
+    add_btn(G01,'U',G02)
+    add_btn(G01,'L',G03)
+    add_btn(G01,'R',G04)
+xian()
 # -------------main---
 while True:
     for event in pygame.event.get():
