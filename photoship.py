@@ -16,13 +16,14 @@ class CLS_photoship(object):
     def add_guide(self,guide):
         guide.id = len(self.guideList)
         self.guideList.append(guide)
-        
+
     def play(self):
         for guide in self.guideList:
             guide.draw(self.scr)
+        pygame.draw.circle(self.scr,(0,0,99),self.mousePos,50,5)
         pygame.display.update()
         self.clock.tick()
-
+        
     def keydown(self,key):
         pass
     def mouse_down(self,pos,btn):
@@ -54,7 +55,7 @@ class CLS_guide(object):
         for btn in self.btnList:
             btn.mouse_up(pos,button)
     def mouse_motion(self,pos):
-        pass
+        self.mousePos = pos
 
 class CLS_button(object):
     def __init__(self,name,picFile,x,y,guideID):
