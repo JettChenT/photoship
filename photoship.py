@@ -12,10 +12,11 @@ class CLS_photoship(object):
         self.guideList = []
         self.guideID = 0
         self.font = pygame.font.Font('STXINGKA.TTF',32)
+        self.mousePos = 0,0
     def add_guide(self,guide):
         guide.id = len(self.guideList)
         self.guideList.append(guide)
-
+        
     def play(self):
         for guide in self.guideList:
             guide.draw(self.scr)
@@ -123,7 +124,7 @@ def house():
     add_btn(bookroom,'U',balcony)
     add_btn(balcony,'L',chair)
     add_btn(chair,'L',laundry)
-xian()
+house()
 # -------------main---
 while True:
     for event in pygame.event.get():
