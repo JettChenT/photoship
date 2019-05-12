@@ -20,6 +20,8 @@ class CLS_photoship(object):
     def play(self):
         for guide in self.guideList:
             guide.draw(self.scr)
+        pygame.draw.line(self.scr,(225,0,0),(self.mousePos[0]-20,self.mousePos[1]),(self.mousePos[0]+20,self.mousePos[1]),3)
+        pygame.draw.line(self.scr,(225,0,0),(self.mousePos[0],self.mousePos[1]-20),(self.mousePos[0],self.mousepos[1]+20),3)
         pygame.draw.circle(self.scr,(0,0,99),self.mousePos,50,5)
         pygame.display.update()
         self.clock.tick()
