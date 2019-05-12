@@ -1,5 +1,5 @@
 import pygame, sys, random, math
-SCREEN_W, SCREEN_H = 800, 600
+SCREEN_W, SCREEN_H = 1024, 768
 
 class CLS_pic(object):
     def __init__(self,fileName):

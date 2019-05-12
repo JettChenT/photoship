@@ -12,7 +12,7 @@ class CLS_photoship(object):
         self.guideList = []
         self.guideID = 0
         self.font = pygame.font.Font('STXINGKA.TTF',32)
-        self.mousePos = 0,0
+        self.mousePos = (0,0)
     def add_guide(self,guide):
         guide.id = len(self.guideList)
         self.guideList.append(guide)
@@ -20,8 +20,6 @@ class CLS_photoship(object):
     def play(self):
         for guide in self.guideList:
             guide.draw(self.scr)
-        pygame.draw.line(self.scr,(225,0,0),(self.mousePos[0]-20,self.mousePos[1]),(self.mousePos[0]+20,self.mousePos[1]),3)
-        pygame.draw.line(self.scr,(225,0,0),(self.mousePos[0],self.mousePos[1]-20),(self.mousePos[0],self.mousepos[1]+20),3)
         pygame.draw.circle(self.scr,(0,0,99),self.mousePos,50,5)
         pygame.display.update()
         self.clock.tick()
@@ -40,24 +38,35 @@ class CLS_guide(object):
         self.pic = CLS_pic(picName)
         self.btnList = []
         self.id = 0
+        self.textList = []
+        self.swayList = []
     def draw(self,scr):
         if pship.guideID != self.id:
             return
         scr.blit(self.pic.img,(0,0))
         for btn in self.btnList:
             btn.draw(scr)
+        for text in self.textList:
+            text.draw(scr)
     def add_button(self,name,picFile,x,y,guideID):
         b = CLS_button(name,picFile,x,y,guideID)
         self.btnList.append(b)
     def mouse_down(self,pos,button):
         for btn in self.btnList:
             btn.mouse_down(pos,button)
-
+        for sway in self.swayList:
+            sway.mouse_down(pos,button)
+    def add_sway(self,rect,guideID):
+        t = CLS_sway(rect,guideID)
+        self.swayList.append(t)
+    def add_text(self,txt,font,x,y,c,rect):
+        t = CLS_text(txt,font,x,y,c,rect)
+        self.textList.append( t )
     def mouse_up(self,pos,button):
         for btn in self.btnList:
             btn.mouse_up(pos,button)
     def mouse_motion(self,pos):
-        self.mousePos = pos
+        pship.mousePos = pos
 
 class CLS_button(object):
     def __init__(self,name,picFile,x,y,guideID):
@@ -88,6 +97,17 @@ class CLS_button(object):
             pship.guideList[self.guideID].pic.draw(pship.scr,11,pship.spd)
 
         pship.guideID = self.guideID
+class CLS_text(object):
+    def __init__(self,txt,font,x,y,c,rect):
+        self.txt = txt
+        self.img = font.render(txt,True,c)
+        self.x,self.y = x,y
+        self.c = c
+        self.rect = pygame.Rect(rect)
+    def draw(self,scr):
+        if self.rect.collidepoint(pship.mousePos):
+            scr.blit(self.img,(self.x,self.y))
+
 def add_btn(btn1,direction,btn2):
     if direction == 'U':
         btn1.add_button('U','bUp.bmp',SCREEN_W//2-35,20,btn2.id)
@@ -101,17 +121,32 @@ def add_btn(btn1,direction,btn2):
     elif direction == 'R':
         btn2.add_button('L','bLeft.bmp',20,SCREEN_H//2-35,btn1.id)
         btn1.add_button('R','bRight.bmp',SCREEN_W-100,SCREEN_H//2-35,btn2.id)
+class CLS_sway(object):
+    def __init__(self,rect,guideID):
+        self.rect = pygame.Rect(rect) 
+        self.guideID = guideID
+    def mouse_down(self,pos,button):
+        if self.rect.collidepoint(pos):
+            pship.guideList[self.guideID].pic.draw(pship.scr,12,pship.spd)
+            pship.guideID = self.guideID
+    
 #----init-----
 pship = CLS_photoship()
 def xian():
     G01 = CLS_guide('xian01.jpg')
     pship.add_guide(G01)
+    
+    G01.add_text('Hello',pship.font,100,100,(225,0,0),(300,300,100,100))
+    G01.add_text('Am I handsome?',pship.font,400,400,(225,20,20),(424,451,100,100))
+    G01.add_text('Nope!',pship.font,591,445,(225,20,20),(424,451,100,100))
     G02 = CLS_guide('xian02.jpg')
     pship.add_guide(G02)
+    G02.add_text('Hi,I am a Tree!',pship.font,723,300,(225,0,0),(723,300,100,100))
     G03 = CLS_guide('xian03.jpg')
     pship.add_guide(G03)
     G04 = CLS_guide('xian04.jpg')
     pship.add_guide(G04)
+    G01.add_sway((424,445,20,20),G02.id)
     add_btn(G01,'U',G02)
     add_btn(G01,'L',G03)
     add_btn(G01,'R',G04)
@@ -127,7 +162,7 @@ def house():
     add_btn(bookroom,'U',balcony)
     add_btn(balcony,'L',chair)
     add_btn(chair,'L',laundry)
-house()
+xian()
 # -------------main---
 while True:
     for event in pygame.event.get():
@@ -137,6 +172,7 @@ while True:
         if event.type == pygame.KEYDOWN:
             pship.keydown(event.key)
         elif event.type ==pygame.MOUSEBUTTONDOWN:
+            print(pship.mousePos)
             pship.mouse_down(event.pos,event.button)
         elif event.type == pygame.MOUSEBUTTONUP:
             pship.mouse_up(event.pos,event.button)
