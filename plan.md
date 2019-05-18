@@ -1,4 +1,2 @@
-# This is the project plan for the photoship
-the player's role is a dective, the player's job is to find a bomb in the house that seems normal, but there are actually many traps. 
-
-The player starts outside, the house, there's a secret tunnel in the outside, the player needs to get the key from the secret tunnel to get in the house. 
+玩家目标为偷U盘
+玩家一开始在房子外面，玩家需要找到一个钥匙才能进入房子。进入房子之后，玩家需要绕开里面的人的视线，并寻找线索。 一旦出现在任何人的视线内，就会被发现，GameOver。有些线索藏在人物的衣服口袋里，要从背后偷窃，其他的在图片里，等玩家自己发现。所有的门都可以打开，但是有些门上锁了，需要在其他房间寻找钥匙。最终，玩家会被带到一个密室，里面有5个盒子，4个盒子里面是炸弹，另外一个是U盘，玩家会有一个谜题，答对就会知道是哪一个箱子。（碰运气也行）拿到U盘之后，玩家会被人发现，玩家需要跳楼逃生，有50%的几率存活。
