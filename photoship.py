@@ -23,7 +23,7 @@ class CLS_photoship(object):
         pygame.draw.circle(self.scr,(0,0,99),self.mousePos,50,5)
         pygame.display.update()
         self.clock.tick()
-        
+
     def keydown(self,key):
         pass
     def mouse_down(self,pos,btn):
@@ -123,19 +123,18 @@ def add_btn(btn1,direction,btn2):
         btn1.add_button('R','bRight.bmp',SCREEN_W-100,SCREEN_H//2-35,btn2.id)
 class CLS_sway(object):
     def __init__(self,rect,guideID):
-        self.rect = pygame.Rect(rect) 
+        self.rect = pygame.Rect(rect)
         self.guideID = guideID
     def mouse_down(self,pos,button):
         if self.rect.collidepoint(pos):
             pship.guideList[self.guideID].pic.draw(pship.scr,12,pship.spd)
             pship.guideID = self.guideID
-    
-#----init-----
+
+#----------init-------
 pship = CLS_photoship()
 def xian():
     G01 = CLS_guide('xian01.jpg')
     pship.add_guide(G01)
-    
     G01.add_text('Hello',pship.font,100,100,(225,0,0),(300,300,100,100))
     G01.add_text('Am I handsome?',pship.font,400,400,(225,20,20),(424,451,100,100))
     G01.add_text('Nope!',pship.font,591,445,(225,20,20),(424,451,100,100))
@@ -162,7 +161,8 @@ def house():
     add_btn(bookroom,'U',balcony)
     add_btn(balcony,'L',chair)
     add_btn(chair,'L',laundry)
-xian()
+
+house()
 # -------------main---
 while True:
     for event in pygame.event.get():
